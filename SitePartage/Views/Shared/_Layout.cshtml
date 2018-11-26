@@ -29,6 +29,7 @@
                     <li>@Html.ActionLink("Utilisateurs", "/", "User")</li>
                     <li>@Html.ActionLink("Locations", "/", "Leasing")</li>
                     <li>@Html.ActionLink("Commentaires", "/", "Comment")</li>
+                    @if (Request.IsAuthenticated){<li>@Html.ActionLink("Se déconnecter", "Logout", "Authentication")</li>}       
                 </ul>
             </div>
         </div>
