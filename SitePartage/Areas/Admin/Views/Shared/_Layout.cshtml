@@ -21,27 +21,26 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
                     <li>@Html.ActionLink("Catégories", "/", "Category")</li>
-                    <li>@Html.ActionLink("Produits", "/", "Product")</li>
-                    <li>@Html.ActionLink("Utilisateurs", "/", "User")</li>
-                    <li>@Html.ActionLink("Locations", "/", "Leasing")</li>
-                    <li>@Html.ActionLink("Commentaires", "/", "Comment")</li>
-                    <li>@Html.ActionLink("Admin", "Index", "Home")</li>
-                </ul>
+                    <li>@Html.ActionLink("Propositions de produits", "/", "Product")</li>
+                    <li>@Html.ActionLink("Demandes d'inscription", "/", "User")</li>
+                    <!--<li>@Html.ActionLink("Locations", "/", "Leasing")</li>-->
+                    <!--<li>@Html.ActionLink("Commentaires", "/", "Comment")</li>-->
+                        <li>@Html.ActionLink("Admin", "Index", "Home")</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - Backoffice</p>
-        </footer>
-    </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Backoffice</p>
+            </footer>
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
