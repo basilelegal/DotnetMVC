@@ -11,7 +11,8 @@ namespace SitePartage.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -21,7 +22,11 @@ namespace SitePartage.Models
         }
     
         public int CategoryID { get; set; }
+
+        [Display(Name = "Nom")]
         public string Name { get; set; }
+
+        [Display(Name = "Image")]
         public string Picture { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

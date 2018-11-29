@@ -11,7 +11,8 @@ namespace SitePartage.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class User
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -23,16 +24,38 @@ namespace SitePartage.Models
         }
     
         public int UserID { get; set; }
+
+        [Display(Name = "Nom")]
         public string LastName { get; set; }
+
+        [Display(Name = "Prénom")]
         public string FirstName { get; set; }
+
+        [Display(Name = "Civilité")]
         public string Civility { get; set; }
+
+        [Display(Name = "Pseudo")]
         public string NickName { get; set; }
+
+        [Display(Name = "Email")]
         public string Email { get; set; }
+
+        [Display(Name = "Mot de passe")]
         public string Password { get; set; }
+
+        [Display(Name = "Nombre de points acquis")]
         public Nullable<int> NbPoint { get; set; }
+
+        [Display(Name = "Adresse")]
         public string Address { get; set; }
+
+        [Display(Name = "Code postal")]
         public string PostalCode { get; set; }
+
+        [Display(Name = "Ville")]
         public string City { get; set; }
+
+        [Display(Name = "Role")]
         public string Role { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

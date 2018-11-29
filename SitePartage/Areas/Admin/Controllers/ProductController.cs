@@ -15,10 +15,51 @@ namespace SitePartage.Areas.Admin.Controllers
         private SitePartageEntities db = new SitePartageEntities();
 
         // GET: Admin/Product
-        public ActionResult Index()
+        public ActionResult Index(string searchString)
         {
             var products = db.Products.Include(p => p.Category).Include(p => p.User);
+            
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(s => s.Status == "to_validate");
+            }
+
             return View(products.ToList());
+        }
+
+        // GET: Admin/Product/ToValidate
+        public ActionResult ToValidate()
+        {
+            //var products = db.Products.Include(p => p.Category).Include(p => p.User);
+
+            var products = from p in db.Products
+                           select p;
+            products = products.Where(s => s.Status == "to_validate");
+
+            return View(products.ToList());
+        }
+
+        // Get: Admin/Product/Validate/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Validate(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Product product = db.Products.Find(id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            //TODO
+            product.Status = "validate";
+            db.SaveChanges();
+
+            return RedirectToAction("ToValidate"); ;
         }
 
         // GET: Admin/Product/Details/5

@@ -1,14 +1,11 @@
 ﻿@model IEnumerable<SitePartage.Models.Product>
 
 @{
-    ViewBag.Title = "Liste des produits";
+    ViewBag.Title = "Propositions de produits";
 }
 
-<h2>Liste des produits</h2>
+<h2>Propositions de produits</h2>
 
-<p>
-    <!--@Html.ActionLink("Create New", "Create")-->
-</p>
 <table class="table">
     <tr>
         <th>
@@ -33,10 +30,10 @@
             @Html.DisplayNameFor(model => model.Status)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Category)
+            @Html.DisplayNameFor(model => model.Category.Name)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.User)
+            @Html.DisplayNameFor(model => model.User.LastName)
         </th>
         <th></th>
     </tr>
@@ -71,9 +68,9 @@
             @Html.DisplayFor(modelItem => item.User.LastName)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ProductID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ProductID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ProductID })
+            @Html.ActionLink("Modifier", "Edit", new { id = item.ProductID }) |
+            @Html.ActionLink("Valider", "Validate", new { id = item.ProductID }) |
+            @Html.ActionLink("Refuser", "Refuse", new { id = item.ProductID })
         </td>
     </tr>
 }

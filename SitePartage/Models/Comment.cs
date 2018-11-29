@@ -11,18 +11,34 @@ namespace SitePartage.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Comment
     {
         public int CommentID { get; set; }
+
+        [Display(Name = "Nom")]
         public Nullable<int> ProductID { get; set; }
+
+        [Display(Name = "Membre")]
         public Nullable<int> UserID { get; set; }
+
+        [Display(Name = "Titre")]
         public string Title { get; set; }
+
+        [Display(Name = "Description")]
         public string Description { get; set; }
+
+        [Display(Name = "Date")]
         public Nullable<System.DateTime> Date { get; set; }
+
+        [Display(Name = "Etat")]
         public string Status { get; set; }
-    
+
+        [Display(Name = "Produit")]
         public virtual Product Product { get; set; }
+
+        [Display(Name = "Membre")]
         public virtual User User { get; set; }
     }
 }
