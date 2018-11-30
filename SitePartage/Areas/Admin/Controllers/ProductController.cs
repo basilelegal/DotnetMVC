@@ -15,18 +15,26 @@ namespace SitePartage.Areas.Admin.Controllers
         private SitePartageEntities db = new SitePartageEntities();
 
         // GET: Admin/Product
-        public ActionResult Index(string searchString)
+        public ActionResult Index(string searchString, string status)
         {
+            ViewBag.Status = new SelectList(Product.statusLst);
+
             var products = db.Products.Include(p => p.Category).Include(p => p.User);
             
             if (!String.IsNullOrEmpty(searchString))
             {
-                products = products.Where(s => s.Status == "to_validate");
+                products = products.Where(n => n.Name.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(status))
+            {
+                products = products.Where(s => s.Status == status);
             }
 
             return View(products.ToList());
         }
 
+        // TODO à virer
         // GET: Admin/Product/ToValidate
         public ActionResult ToValidate()
         {
@@ -39,6 +47,7 @@ namespace SitePartage.Areas.Admin.Controllers
             return View(products.ToList());
         }
 
+        // TODO à virer
         // Get: Admin/Product/Validate/5
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -116,8 +125,12 @@ namespace SitePartage.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+
+            // Gestion des select box
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", product.CategoryID);
             ViewBag.UserID = new SelectList(db.Users, "UserID", "LastName", product.UserID);
+            ViewBag.Status = new SelectList(Product.statusLst);
+
             return View(product);
         }
 

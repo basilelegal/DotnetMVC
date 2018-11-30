@@ -15,6 +15,8 @@ namespace SitePartage.Models
 
     public partial class Product
     {
+        public static List<string> statusLst = new List<string>() { "draft", "to_validate", "online" };
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
