@@ -11,9 +11,12 @@ namespace SitePartage.Models
 {
     using System;
     using System.Collections.Generic;
-    
+    using System.ComponentModel.DataAnnotations;
+
     public partial class Product
     {
+        public static List<string> statusLst = new List<string>() { "draft", "to_validate", "online" };
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
         {
@@ -22,21 +25,44 @@ namespace SitePartage.Models
         }
     
         public int ProductID { get; set; }
+
+        [Display(Name = "Catégorie")]
         public Nullable<int> CategoryID { get; set; }
+
+        [Display(Name = "Membre")]
         public Nullable<int> UserID { get; set; }
+
+        [Display(Name = "Nom")]
         public string Name { get; set; }
+
+        [Display(Name = "Description")]
         public string Description { get; set; }
+
+        [Display(Name = "Cout")]
         public Nullable<int> Cost { get; set; }
+
+        [Display(Name = "Image")]
         public string Picture { get; set; }
+
+        [Display(Name = "Type")]
         public string Type { get; set; }
+
+        [Display(Name = "Poids")]
         public Nullable<double> Weight { get; set; }
+
+        [Display(Name = "Etat")]
         public string Status { get; set; }
-    
+
+        [Display(Name = "Catégorie")]
         public virtual Category Category { get; set; }
+
+        [Display(Name = "Membre")]
+        public virtual User User { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Leasing> Leasings { get; set; }
-        public virtual User User { get; set; }
+
     }
 }

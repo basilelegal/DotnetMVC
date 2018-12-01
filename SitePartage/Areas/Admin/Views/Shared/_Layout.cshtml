@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Mon application ASP.NET</title>
+    <title>@ViewBag.Title - Backoffice</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -21,29 +21,26 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Accueil", "Index", "Home")</li>
-                    <li>@Html.ActionLink("À propos de", "About", "Home")</li>
-                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                     <li>@Html.ActionLink("Catégories", "/", "Category")</li>
-                    <li>@Html.ActionLink("Produits", "/", "Product")</li>
-                    <li>@Html.ActionLink("Utilisateurs", "/", "User")</li>
-                    <li>@Html.ActionLink("Locations", "/", "Leasing")</li>
-                    <li>@Html.ActionLink("Commentaires", "/", "Comment")</li>
-                    <li>@Html.ActionLink("Admin", "Index", "Home", new { area = "Admin" }, null)</li>
-                </ul>
+                    <li>@Html.ActionLink("Propositions de produits", "/", "Product")</li>
+                    <li>@Html.ActionLink("Demandes d'inscription", "/", "User")</li>
+                    <!--<li>@Html.ActionLink("Locations", "/", "Leasing")</li>-->
+                    <!--<li>@Html.ActionLink("Commentaires", "/", "Comment")</li>-->
+                        <li>@Html.ActionLink("Admin", "Index", "Home")</li>
+                    </ul>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
-    </div>
+        <div class="container body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Backoffice</p>
+            </footer>
+        </div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
-</body>
-</html>
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @RenderSection("scripts", required: false)
+    </body>
+    </html>
