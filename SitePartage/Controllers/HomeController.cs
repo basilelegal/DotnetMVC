@@ -11,7 +11,6 @@ namespace SitePartage.Controllers
 {
     public class HomeController : Controller
     {
-        {
         private SitePartageEntities db = new SitePartageEntities();
 
         public ActionResult Index()
