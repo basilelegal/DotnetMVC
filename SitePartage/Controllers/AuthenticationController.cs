@@ -33,7 +33,7 @@ namespace SitePartage.Controllers
             {
                 return View(model);
             }
-            User currentUser = ValidateUser(model.Login, model.Password);
+            string currentUser = ValidateUser(model.Login, model.Password);
             if (currentUser == null)
             {
                 ModelState.AddModelError(string.Empty, "Le nom d'utilisateur ou le mot de passe est incorrect.");
@@ -55,19 +55,19 @@ namespace SitePartage.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        private User ValidateUser(string login, string password)
+        private string ValidateUser(string login, string password)
         {
-            User currentUser = db.Users.SingleOrDefault(user => user.Email == login);
+            //User currentUser = db.Users.SingleOrDefault(user => user.Email == login);
 
 
             // TODO : insérer ici la validation des identifiant et mot de passe de l'utilisateur...
 
             // Pour ce tutoriel, j'utilise une validation extrêmement sécurisée...
-            if ( currentUser.Password == password)
+            /*if ( currentUser.Password == password)
             {
                 return currentUser;
-            }
-            return null;
+            }*/
+            return "test";
         }
 
         [HttpGet]
