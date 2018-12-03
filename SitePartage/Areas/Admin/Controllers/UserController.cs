@@ -15,9 +15,30 @@ namespace SitePartage.Areas.Admin.Controllers
         private SitePartageEntities db = new SitePartageEntities();
 
         // GET: Admin/User
-        public ActionResult Index()
+        public ActionResult Index(string searchString, string isValid)
         {
-            return View(db.Users.ToList());
+            List<string> isValidLst = new List<string>() { "Oui", "Non" };
+            ViewBag.IsValid = new SelectList(isValidLst);
+
+            var users = from u in db.Users
+                        select u;
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                users = users.Where(l => l.LastName.Contains(searchString) || l.FirstName.Contains(searchString));
+            }
+
+            if (!String.IsNullOrEmpty(isValid))
+            {
+                if (isValid == "Oui") {
+                    users = users.Where(i => i.IsValid == true);
+                } else
+                {
+                    users = users.Where(i => i.IsValid == false);
+                }
+            }
+            
+            return View(users.ToList());
         }
 
         // GET: Admin/User/Details/5
@@ -46,7 +67,7 @@ namespace SitePartage.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,NbPoint,Address,PostalCode,City,Role")] User user)
+        public ActionResult Create([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,NbPoint,Address,PostalCode,City,Role,IsValid")] User user)
         {
             if (ModelState.IsValid)
             {
@@ -78,7 +99,7 @@ namespace SitePartage.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,NbPoint,Address,PostalCode,City,Role")] User user)
+        public ActionResult Edit([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,NbPoint,Address,PostalCode,City,Role,IsValid")] User user)
         {
             if (ModelState.IsValid)
             {

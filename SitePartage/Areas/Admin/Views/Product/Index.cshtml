@@ -7,17 +7,17 @@
 <h2>Liste des produits</h2>
 
 <p>
-    <!--@Html.ActionLink("Create New", "Create")-->
+    @Html.ActionLink("Create New", "Create")
 
     @using (Html.BeginForm("Index", "Product", FormMethod.Get))
     {
-<p>
-    Nom : @Html.TextBox("SearchString") <br />
+    <p>
+        Nom : @Html.TextBox("SearchString") <br />
 
-    Etat : @Html.DropDownList("Status", "Tous") <br />
+        Etat : @Html.DropDownList("Status", "Tous") <br />
 
-    <input type="submit" value="Filter" />
-</p>
+        <input type="submit" value="Filter" />
+    </p>
     }
 </p>
     <table class="table">

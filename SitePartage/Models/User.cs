@@ -57,7 +57,10 @@ namespace SitePartage.Models
 
         [Display(Name = "Role")]
         public string Role { get; set; }
-    
+
+        [Display(Name = "Validé")]
+        public Nullable<bool> IsValid { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
