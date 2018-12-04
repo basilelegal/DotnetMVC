@@ -2,13 +2,13 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 11/21/2018 17:07:57
--- Generated from EDMX file: C:\User\Shalom\source\repos\SitePartage\SitePartage\Models\SitePartage.edmx
+-- Date Created: 12/01/2018 10:50:36
+-- Generated from EDMX file: C:\Users\Teusk\source\repos\SitePartage\SitePartage\Models\SitePartage.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
 GO
-USE [SitePartageEntities];
+USE [SitePartage];
 GO
 IF SCHEMA_ID(N'dbo') IS NULL EXECUTE(N'CREATE SCHEMA [dbo]');
 GO
@@ -71,7 +71,6 @@ CREATE TABLE [dbo].[Category] (
 );
 GO
 
--- Creating table 'Comment'
 CREATE TABLE [dbo].[Comment] (
     [CommentID] int IDENTITY(1,1) NOT NULL,
     [ProductID] int  NULL,
@@ -83,7 +82,7 @@ CREATE TABLE [dbo].[Comment] (
 );
 GO
 
--- Creating table 'Leasing'
+
 CREATE TABLE [dbo].[Leasing] (
     [LeasingID] int IDENTITY(1,1) NOT NULL,
     [ProductID] int  NULL,
@@ -136,6 +135,7 @@ CREATE TABLE [dbo].[User] (
     [PostalCode] nvarchar(10)  NULL,
     [City] nvarchar(15)  NULL,
     [Role] nvarchar(10)  NULL
+    [IsValid] bit  NOT NULL
 );
 GO
 
@@ -218,6 +218,7 @@ ALTER TABLE [dbo].[Comment]
 ADD CONSTRAINT [FK_Comment_User]
     FOREIGN KEY ([UserID])
     REFERENCES [dbo].[User]
+
         ([UserID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO

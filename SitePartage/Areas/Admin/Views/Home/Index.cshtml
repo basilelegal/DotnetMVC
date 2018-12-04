@@ -8,9 +8,8 @@
 <div class="jumbotron">
     <h1>Backoffice</h1>
     <p class="lead">Troc de matériels & services entre particuliers</p>
-    <a href="@Url.Action("ToValidate", "User", new { SearchString = "to_validate" })" class="btn btn-primary btn-lg">Demandes d'inscription</a>
-    <a href="@Url.Action("ToValidate", "Product")" class="btn btn-primary btn-lg">Propositions de produits (ToValidate)</a>
-    <a href="@Url.Action("Index", "Product", new { Status = "to_validate" })" class="btn btn-primary btn-lg">Propositions de produits (Recherche)</a>
+    <a href="@Url.Action("Index", "User", new { IsValid = false })" class="btn btn-primary btn-lg">Demandes d'inscription (TODO : nb demande)</a>
+    <a href="@Url.Action("Index", "Product", new { Status = "to_validate" })" class="btn btn-primary btn-lg">Propositions de produits (TODO : nb prod)</a>
 </div>
 
 <div class="row">
