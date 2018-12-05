@@ -63,16 +63,15 @@ GO
 -- Creating all tables
 -- --------------------------------------------------
 
--- Creating table 'Categories'
-CREATE TABLE [dbo].[Categories] (
+-- Creating table 'Category'
+CREATE TABLE [dbo].[Category] (
     [CategoryID] int IDENTITY(1,1) NOT NULL,
     [Name] nvarchar(15)  NOT NULL,
     [Picture] nvarchar(max)  NULL
 );
 GO
 
--- Creating table 'Comments'
-CREATE TABLE [dbo].[Comments] (
+CREATE TABLE [dbo].[Comment] (
     [CommentID] int IDENTITY(1,1) NOT NULL,
     [ProductID] int  NULL,
     [UserID] int  NULL,
@@ -83,8 +82,8 @@ CREATE TABLE [dbo].[Comments] (
 );
 GO
 
--- Creating table 'Leasings'
-CREATE TABLE [dbo].[Leasings] (
+
+CREATE TABLE [dbo].[Leasing] (
     [LeasingID] int IDENTITY(1,1) NOT NULL,
     [ProductID] int  NULL,
     [UserID] int  NULL,
@@ -97,8 +96,8 @@ CREATE TABLE [dbo].[Leasings] (
 );
 GO
 
--- Creating table 'Products'
-CREATE TABLE [dbo].[Products] (
+-- Creating table 'Product'
+CREATE TABLE [dbo].[Product] (
     [ProductID] int IDENTITY(1,1) NOT NULL,
     [CategoryID] int  NULL,
     [UserID] int  NULL,
@@ -122,8 +121,8 @@ CREATE TABLE [dbo].[sysdiagrams] (
 );
 GO
 
--- Creating table 'Users'
-CREATE TABLE [dbo].[Users] (
+-- Creating table 'User'
+CREATE TABLE [dbo].[User] (
     [UserID] int IDENTITY(1,1) NOT NULL,
     [LastName] nvarchar(30)  NULL,
     [FirstName] nvarchar(30)  NULL,
@@ -135,7 +134,7 @@ CREATE TABLE [dbo].[Users] (
     [Address] nvarchar(60)  NULL,
     [PostalCode] nvarchar(10)  NULL,
     [City] nvarchar(15)  NULL,
-    [Role] nvarchar(10)  NULL,
+    [Role] nvarchar(10)  NULL
     [IsValid] bit  NOT NULL
 );
 GO
@@ -144,27 +143,27 @@ GO
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
 
--- Creating primary key on [CategoryID] in table 'Categories'
-ALTER TABLE [dbo].[Categories]
-ADD CONSTRAINT [PK_Categories]
+-- Creating primary key on [CategoryID] in table 'Category'
+ALTER TABLE [dbo].[Category]
+ADD CONSTRAINT [PK_Category]
     PRIMARY KEY CLUSTERED ([CategoryID] ASC);
 GO
 
--- Creating primary key on [CommentID] in table 'Comments'
-ALTER TABLE [dbo].[Comments]
-ADD CONSTRAINT [PK_Comments]
+-- Creating primary key on [CommentID] in table 'Comment'
+ALTER TABLE [dbo].[Comment]
+ADD CONSTRAINT [PK_Comment]
     PRIMARY KEY CLUSTERED ([CommentID] ASC);
 GO
 
--- Creating primary key on [LeasingID] in table 'Leasings'
-ALTER TABLE [dbo].[Leasings]
-ADD CONSTRAINT [PK_Leasings]
+-- Creating primary key on [LeasingID] in table 'Leasing'
+ALTER TABLE [dbo].[Leasing]
+ADD CONSTRAINT [PK_Leasing]
     PRIMARY KEY CLUSTERED ([LeasingID] ASC);
 GO
 
--- Creating primary key on [ProductID] in table 'Products'
-ALTER TABLE [dbo].[Products]
-ADD CONSTRAINT [PK_Products]
+-- Creating primary key on [ProductID] in table 'Product'
+ALTER TABLE [dbo].[Product]
+ADD CONSTRAINT [PK_Product]
     PRIMARY KEY CLUSTERED ([ProductID] ASC);
 GO
 
@@ -174,9 +173,9 @@ ADD CONSTRAINT [PK_sysdiagrams]
     PRIMARY KEY CLUSTERED ([diagram_id] ASC);
 GO
 
--- Creating primary key on [UserID] in table 'Users'
-ALTER TABLE [dbo].[Users]
-ADD CONSTRAINT [PK_Users]
+-- Creating primary key on [UserID] in table 'User'
+ALTER TABLE [dbo].[User]
+ADD CONSTRAINT [PK_User]
     PRIMARY KEY CLUSTERED ([UserID] ASC);
 GO
 
@@ -184,93 +183,94 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [CategoryID] in table 'Products'
-ALTER TABLE [dbo].[Products]
+-- Creating foreign key on [CategoryID] in table 'Product'
+ALTER TABLE [dbo].[Product]
 ADD CONSTRAINT [FK_Product_Category]
     FOREIGN KEY ([CategoryID])
-    REFERENCES [dbo].[Categories]
+    REFERENCES [dbo].[Category]
         ([CategoryID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Product_Category'
 CREATE INDEX [IX_FK_Product_Category]
-ON [dbo].[Products]
+ON [dbo].[Product]
     ([CategoryID]);
 GO
 
--- Creating foreign key on [ProductID] in table 'Comments'
-ALTER TABLE [dbo].[Comments]
+-- Creating foreign key on [ProductID] in table 'Comment'
+ALTER TABLE [dbo].[Comment]
 ADD CONSTRAINT [FK_Comment_Product]
     FOREIGN KEY ([ProductID])
-    REFERENCES [dbo].[Products]
+    REFERENCES [dbo].[Product]
         ([ProductID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Comment_Product'
 CREATE INDEX [IX_FK_Comment_Product]
-ON [dbo].[Comments]
+ON [dbo].[Comment]
     ([ProductID]);
 GO
 
--- Creating foreign key on [UserID] in table 'Comments'
-ALTER TABLE [dbo].[Comments]
+-- Creating foreign key on [UserID] in table 'Comment'
+ALTER TABLE [dbo].[Comment]
 ADD CONSTRAINT [FK_Comment_User]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[User]
+
         ([UserID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Comment_User'
 CREATE INDEX [IX_FK_Comment_User]
-ON [dbo].[Comments]
+ON [dbo].[Comment]
     ([UserID]);
 GO
 
--- Creating foreign key on [ProductID] in table 'Leasings'
-ALTER TABLE [dbo].[Leasings]
+-- Creating foreign key on [ProductID] in table 'Leasing'
+ALTER TABLE [dbo].[Leasing]
 ADD CONSTRAINT [FK_Leasing_Product]
     FOREIGN KEY ([ProductID])
-    REFERENCES [dbo].[Products]
+    REFERENCES [dbo].[Product]
         ([ProductID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Leasing_Product'
 CREATE INDEX [IX_FK_Leasing_Product]
-ON [dbo].[Leasings]
+ON [dbo].[Leasing]
     ([ProductID]);
 GO
 
--- Creating foreign key on [UserID] in table 'Leasings'
-ALTER TABLE [dbo].[Leasings]
+-- Creating foreign key on [UserID] in table 'Leasing'
+ALTER TABLE [dbo].[Leasing]
 ADD CONSTRAINT [FK_Leasing_User]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[User]
         ([UserID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Leasing_User'
 CREATE INDEX [IX_FK_Leasing_User]
-ON [dbo].[Leasings]
+ON [dbo].[Leasing]
     ([UserID]);
 GO
 
--- Creating foreign key on [UserID] in table 'Products'
-ALTER TABLE [dbo].[Products]
+-- Creating foreign key on [UserID] in table 'Product'
+ALTER TABLE [dbo].[Product]
 ADD CONSTRAINT [FK_Product_User]
     FOREIGN KEY ([UserID])
-    REFERENCES [dbo].[Users]
+    REFERENCES [dbo].[User]
         ([UserID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_Product_User'
 CREATE INDEX [IX_FK_Product_User]
-ON [dbo].[Products]
+ON [dbo].[Product]
     ([UserID]);
 GO
 

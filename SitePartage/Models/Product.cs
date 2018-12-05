@@ -63,6 +63,5 @@ namespace SitePartage.Models
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Leasing> Leasings { get; set; }
-
     }
 }
