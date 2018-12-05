@@ -5,18 +5,18 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="55de3e9bbe3c494a939c77173dce3149" Name="Diagram1">
-        <EntityTypeShape EntityType="SitePartageModel.Category" Width="1.5" PointX="0.75" PointY="2" IsExpanded="true" />
-        <EntityTypeShape EntityType="SitePartageModel.Comment" Width="1.5" PointX="3" PointY="5.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SitePartageModel.Leasing" Width="1.5" PointX="6" PointY="5.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="SitePartageModel.Product" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
         <EntityTypeShape EntityType="SitePartageModel.sysdiagram" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="SitePartageModel.User" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <AssociationConnector Association="SitePartageModel.FK_Product_Category" ManuallyRouted="false" />
-        <AssociationConnector Association="SitePartageModel.FK_Comment_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="SitePartageModel.FK_Comment_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SitePartageModel.FK_Leasing_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="SitePartageModel.FK_Leasing_User" ManuallyRouted="false" />
-        <AssociationConnector Association="SitePartageModel.FK_Product_User" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="SitePartageModel.Category" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="SitePartageModel.Comment" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="SitePartageModel.Leasing" Width="1.5" PointX="6" PointY="8.375" />
+        <EntityTypeShape EntityType="SitePartageModel.Product" Width="1.5" PointX="3" PointY="4.125" />
+        <EntityTypeShape EntityType="SitePartageModel.User" Width="1.5" PointX="0.75" PointY="7.875" />
+        <AssociationConnector Association="SitePartageModel.FK_Product_Category" />
+        <AssociationConnector Association="SitePartageModel.FK_Comment_Product" />
+        <AssociationConnector Association="SitePartageModel.FK_Comment_User" />
+        <AssociationConnector Association="SitePartageModel.FK_Leasing_Product" />
+        <AssociationConnector Association="SitePartageModel.FK_Leasing_User" />
+        <AssociationConnector Association="SitePartageModel.FK_Product_User" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
