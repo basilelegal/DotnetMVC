@@ -12,10 +12,24 @@ namespace SitePartage.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Web.Mvc;
 
     public partial class Product
     {
-        public static List<string> statusLst = new List<string>() { "draft", "to_validate", "online" };
+        //public static List<string> statusLst = new List<string>() { "draft", "to_validate", "online" };
+        public static List<string> typeLst = new List<string>() { "matériel", "service" };
+
+        public IEnumerable<SelectListItem> statusListItem { get; set; }
+
+        public static SelectList StatusOptions { get; internal set; }
+
+        public static List<SelectListItem> statusLst = new List<SelectListItem>
+        {
+            new SelectListItem { Text = "Brouillon", Value = "draft" },
+            new SelectListItem { Text = "A valider", Value = "to_validate" },
+            new SelectListItem { Text = "En ligne", Value = "online" },
+        };
+
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Product()
@@ -47,7 +61,7 @@ namespace SitePartage.Models
         [Display(Name = "Type")]
         public string Type { get; set; }
 
-        [Display(Name = "Poids")]
+        [Display(Name = "Poids (kg)")]
         public Nullable<double> Weight { get; set; }
 
         [Display(Name = "Etat")]
@@ -63,5 +77,6 @@ namespace SitePartage.Models
         public virtual ICollection<Comment> Comments { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Leasing> Leasings { get; set; }
+        
     }
 }

@@ -3,13 +3,13 @@
     ViewBag.Title = "Index d'administration";
 }
 
-<h2>Index d'administration</h2>
+<h2>Index d'administratio</h2>
 
 <div class="jumbotron">
     <h1>Backoffice</h1>
     <p class="lead">Troc de matériels & services entre particuliers</p>
-    <a href="@Url.Action("Index", "User", new { IsValid = false })" class="btn btn-primary btn-lg">Demandes d'inscription (TODO : nb demande)</a>
-    <a href="@Url.Action("Index", "Product", new { Status = "to_validate" })" class="btn btn-primary btn-lg">Propositions de produits (TODO : nb prod)</a>
+    <a href="@Url.Action("Index", "User", new { IsValid = "Non" })" class="btn btn-primary btn-lg">Demandes d'inscription (@ViewData["nbUserToValidate"])</a>
+    <a href="@Url.Action("Index", "Product", new { Status = "to_validate" })" class="btn btn-primary btn-lg">Propositions de produits (@ViewData["nbProductToValidate"])</a>
 </div>
 
 <div class="row">

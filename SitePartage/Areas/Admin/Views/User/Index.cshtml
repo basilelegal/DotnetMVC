@@ -1,12 +1,15 @@
 ﻿@model IEnumerable<SitePartage.Models.User>
 
-@{
+@if (Request.Params["isValid"] == "Non")
+{
     ViewBag.Title = "Demandes d'inscription";
+    <h2>Demandes d'inscription</h2>
 }
-
-<h2>Demandes d'inscription</h2>
-
-<h2>Liste des membres</h2>
+else
+{
+    ViewBag.Title = "Liste des membres";
+    <h2>Liste des membres</h2>
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -97,9 +100,17 @@
                     @Html.DisplayFor(modelItem => item.Role)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.UserID }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.UserID }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.UserID })
+                    @if (Request.Params["isValid"] == "Non")
+                    {
+                        @Html.ActionLink("Refuser", "Delete", new { id = item.UserID })
+                        @Html.ActionLink("Valider", "Edit", new { id = item.UserID })
+                    }
+                    else
+                    {
+                    @Html.ActionLink("Modifier", "Edit", new { id = item.UserID })
+                    }
+
+                    @Html.ActionLink("Détails", "Details", new { id = item.UserID })
                 </td>
             </tr>
         }

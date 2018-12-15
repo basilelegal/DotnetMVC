@@ -43,7 +43,7 @@ namespace SitePartage.Models
         [Display(Name = "Mot de passe")]
         public string Password { get; set; }
 
-        [Display(Name = "Nombre de points acquis")]
+        [Display(Name = "Nombre de points")]
         public Nullable<int> NbPoint { get; set; }
 
         [Display(Name = "Adresse")]

@@ -1,10 +1,10 @@
 ﻿@model SitePartage.Models.Product
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "Modifier un produit";
 }
 
-<h2>Edit</h2>
+<h2>Modifier un produit</h2>
 
 
 @using (Html.BeginForm())
@@ -68,7 +68,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.Type, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.Type, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.Type, null, htmlAttributes: new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.Type, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -98,7 +98,7 @@
 }
 
 <div>
-    @Html.ActionLink("Rertour à la liste", "Index")
+    @Html.ActionLink("Retour à la liste", "Index")
 </div>
 
 @section Scripts {

@@ -54,6 +54,14 @@ namespace SitePartage.Areas.Admin.Controllers
         {
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name");
             ViewBag.UserID = new SelectList(db.Users, "UserID", "LastName");
+
+            //ViewBag.Status = new SelectList(Product.statusLst);
+
+
+            ViewBag.Status = new SelectList(Product.statusLst, "Value", "Text");
+
+            ViewBag.Type = new SelectList(Product.typeLst);
+
             return View();
         }
 
@@ -92,7 +100,10 @@ namespace SitePartage.Areas.Admin.Controllers
             // Gestion des select box
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", product.CategoryID);
             ViewBag.UserID = new SelectList(db.Users, "UserID", "LastName", product.UserID);
-            ViewBag.Status = new SelectList(Product.statusLst);
+
+            ViewBag.Status = new SelectList(Product.statusLst, "Value", "Text");
+
+            ViewBag.Type = new SelectList(Product.typeLst);
 
             return View(product);
         }
