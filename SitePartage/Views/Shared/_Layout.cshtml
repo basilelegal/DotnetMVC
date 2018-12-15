@@ -87,12 +87,14 @@
         <div class="container">
             <div class="agile-its-header">
                 <div class="logo">
-                    <h1><a href="index.html"><span>Partage</span>CO</a></h1>
+                    <h1><a href="@Url.Action("Index", "Home")"><span>Partage</span>CO</a></h1>
                 </div>
                 <div class="agileits_search">
-                    @Html.ActionLink("Se connecter", "Index", "Home", new { @class = "post-w3layouts-ad" })
-                    @Html.ActionLink("Chercher", "Index", "Home", new { @class = "post-w3layouts-ad", @style = "margin-right: 10px;" })
-                    @Html.ActionLink("Poster une annonce", "Index", "Home", new { @class = "post-w3layouts-ad", @style = "margin-right: 10px;" })
+                    @Html.ActionLink("Admin", "Index", "Home", new { area = "Admin" }, new { @class = "post-w3layouts-ad", @target = "_blanck" })
+                    @Html.ActionLink("Se connecter", "Login", "Authentication", "", new { @class = "post-w3layouts-ad", @style = "margin-right: 10px;" })
+                    @Html.ActionLink("Deconnexion", "Logout", "Authentication", "", new { @class = "post-w3layouts-ad", @style = "margin-right: 10px;" })
+                    @Html.ActionLink("Chercher", "Index", "Home", "", new { @class = "post-w3layouts-ad", @style = "margin-right: 10px;" })
+                    @Html.ActionLink("Poster une annonce", "Create", "Product", "", new { @class = "post-w3layouts-ad", @style = "margin-right: 10px;" })
                 </div>
                 <div class="clearfix"></div>
             </div>

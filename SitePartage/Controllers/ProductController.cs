@@ -4,9 +4,12 @@ using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using SitePartage.Models;
+using SitePartage.Helpers;
 
 namespace SitePartage.Controllers
 {
@@ -41,6 +44,8 @@ namespace SitePartage.Controllers
         {
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name");
             ViewBag.UserID = new SelectList(db.Users, "UserID", "LastName");
+            ViewBag.Type = new SelectList(Product.typeLst);
+
             return View();
         }
 
@@ -49,10 +54,11 @@ namespace SitePartage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ProductID,CategoryID,UserID,Name,Description,Cost,Picture,Type,Weight,Status")] Product product)
+        public ActionResult Create([Bind(Include = "ProductID,CategoryID,Name,Description,Cost,Picture,Type,Weight,Status")] Product product)
         {
             if (ModelState.IsValid)
             {
+                product.UserID = int.Parse(this.User.GetCurrentUserId());
                 db.Products.Add(product);
                 db.SaveChanges();
                 return RedirectToAction("Index");

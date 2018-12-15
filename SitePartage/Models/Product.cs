@@ -16,7 +16,6 @@ namespace SitePartage.Models
 
     public partial class Product
     {
-        //public static List<string> statusLst = new List<string>() { "draft", "to_validate", "online" };
         public static List<string> typeLst = new List<string>() { "matériel", "service" };
 
         public IEnumerable<SelectListItem> statusListItem { get; set; }
@@ -46,12 +45,15 @@ namespace SitePartage.Models
         [Display(Name = "Membre")]
         public Nullable<int> UserID { get; set; }
 
+        [Required]
         [Display(Name = "Nom")]
         public string Name { get; set; }
 
+        [Required]
         [Display(Name = "Description")]
         public string Description { get; set; }
 
+        [Required]
         [Display(Name = "Cout")]
         public Nullable<int> Cost { get; set; }
 
@@ -65,7 +67,7 @@ namespace SitePartage.Models
         public Nullable<double> Weight { get; set; }
 
         [Display(Name = "Etat")]
-        public string Status { get; set; }
+        public string Status { get; set; } = "to_validate";
 
         [Display(Name = "Catégorie")]
         public virtual Category Category { get; set; }

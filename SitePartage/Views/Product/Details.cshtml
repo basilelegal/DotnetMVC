@@ -59,14 +59,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Status)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.Category.Name)
         </dt>
 
@@ -83,6 +75,7 @@
         </dd>
 
     </dl>
+    <a href="@Url.Action("Create", "Leasing", new { ProductID = Model.ProductID })">Louer ce produit</a>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.ProductID }) |

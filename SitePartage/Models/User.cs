@@ -12,9 +12,13 @@ namespace SitePartage.Models
     using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
+    using System.Security.Claims;
+    using System.Security.Principal;
 
     public partial class User
     {
+        public static List<string> civilityLst = new List<string>() { "Madame", "Monsieur" };
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
@@ -25,41 +29,50 @@ namespace SitePartage.Models
     
         public int UserID { get; set; }
 
+        [Required]
         [Display(Name = "Nom")]
         public string LastName { get; set; }
 
+        [Required]
         [Display(Name = "Prénom")]
         public string FirstName { get; set; }
 
         [Display(Name = "Civilité")]
-        public string Civility { get; set; }
+        public string Civility { get; set; } = "Madame";
 
+        [Required]
         [Display(Name = "Pseudo")]
         public string NickName { get; set; }
 
+        [Required]
         [Display(Name = "Email")]
+        [System.Web.Mvc.Remote("EmailExists", "User", HttpMethod = "POST", ErrorMessage = "Email déjà utilisé.")]
         public string Email { get; set; }
 
+        [Required]
         [Display(Name = "Mot de passe")]
         public string Password { get; set; }
 
         [Display(Name = "Nombre de points")]
-        public Nullable<int> NbPoint { get; set; }
+        public Nullable<int> NbPoint { get; set; } = 50;
 
+        [Required]
         [Display(Name = "Adresse")]
         public string Address { get; set; }
 
+        [Required]
         [Display(Name = "Code postal")]
         public string PostalCode { get; set; }
 
+        [Required]
         [Display(Name = "Ville")]
         public string City { get; set; }
 
         [Display(Name = "Role")]
-        public string Role { get; set; }
+        public string Role { get; set; } = "Membre";
 
         [Display(Name = "Validé")]
-        public Nullable<bool> IsValid { get; set; }
+        public Nullable<bool> IsValid { get; set; } = false;
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Comment> Comments { get; set; }
@@ -68,4 +81,5 @@ namespace SitePartage.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Product> Products { get; set; }
     }
+
 }

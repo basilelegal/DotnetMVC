@@ -1,7 +1,7 @@
 ﻿@model SitePartage.Models.LoginViewModel
 
 @{
-    ViewBag.Title = "Login";
+    ViewBag.Title = "Connexion";
 }
 
 
@@ -20,7 +20,7 @@
             }
                 <div class="forgot-grid">
                     <div class="forgot">
-                        <a href="#" data-toggle="modal" data-target="#myModal2">Mot de passe oublié ?</a>
+                        <a href="#" data-toggle="modal" data-target="#myModal2">TODO Mot de passe oublié ?</a>
                     </div>
                     <div class="modal fade" id="myModal2" role="dialog">
                         <div class="modal-dialog">
@@ -41,7 +41,7 @@
                     </div>
                     <div class="clearfix"> </div>
                 </div>
-            <h6> Pas encore membre ? <a href="signup.html">Inscrivez vous maintenant</a> </h6>
+            <h6>Pas encore membre ? <a href="@Url.Action("Create", "User")">Inscrivez-vous !</a> </h6>
         </div>
     </div>
 </section>

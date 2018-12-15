@@ -38,6 +38,8 @@ namespace SitePartage.Controllers
         // GET: User/Create
         public ActionResult Create()
         {
+            ViewBag.Civility = new SelectList(SitePartage.Models.User.civilityLst);
+
             return View();
         }
 
@@ -46,13 +48,13 @@ namespace SitePartage.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,NbPoint,Address,PostalCode,City,Role")] User user)
+        public ActionResult Create([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,Address,PostalCode,City")] User user)
         {
             if (ModelState.IsValid)
             {
                 db.Users.Add(user);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Login", "Authentication", new {register = 1});
             }
 
             return View(user);
@@ -122,6 +124,14 @@ namespace SitePartage.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // Vérifie l'unicité de l'email 
+        public JsonResult EmailExists(string email)
+        {
+            User user = db.Users.SingleOrDefault(e => e.Email == email);
+
+            return Json(user == null);
         }
     }
 }

@@ -115,7 +115,7 @@
                                         <ul class="list">
                                             @foreach (var product in products)
                                             {
-                                                <a href="single.html">
+                                                <a href="@Url.Action("Details", "Product", new { id = product.ProductID })">
                                                     <li>
                                                         <img src="@product.Picture" title="" alt="" />
                                                         <section class="list-left">
