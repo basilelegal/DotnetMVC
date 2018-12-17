@@ -12,14 +12,14 @@
 <div class="total-ads main-grid-border">
 
     <div class="w3-categories">
-        <h3>Sections</h3>
+        <h3>Categories</h3>
         <div class="container">
 
             @foreach (var category in categories)
             {
                 <div class="col-md-@categorysize">
                     <div class="focus-grid w3layouts-boder1">
-                        <a class="btn-8" href="categories.html">
+                        <a class="btn-8" href="@Url.Action("Index", "Home", new { categoryID = @category.CategoryID })">
                             <div class="focus-border">
                                 <div class="focus-layout">
                                     <div class="focus-image"><i class="@category.Picture"></i></div>
@@ -38,17 +38,17 @@
             <div class="side-bar col-md-3">
                 <div class="search-hotel">
                     <h3 class="agileits-sear-head">Filtrer par mots clés</h3>
-                    <form>
-                        <input type="text" value="mot clés..." onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'Product name...';}" required="">
-                        <input type="submit" value=" ">
-                    </form>
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Get))
+                    {
+                        @Html.TextBox("SearchString", "", new { @placeholder = "mot clés...", @required = "required" }) <br />
+                        <br /><input type="submit" value=" " />
+                    }
                 </div>
 
                 <div class="range">
-                    <h3 class="agileits-sear-head">Points par jours</h3>
+                    <h3 class="agileits-sear-head">TODO Points par jours ??</h3>
                     <ul class="dropdown-menu6">
                         <li>
-
                             <div id="slider-range"></div>
                             <input type="text" id="amount" style="border: 0; color: #ffffff; font-weight: normal;" />
                         </li>

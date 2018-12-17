@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using SitePartage.Helpers;
 using SitePartage.Models;
 
 namespace SitePartage.Controllers
@@ -44,15 +45,17 @@ namespace SitePartage.Controllers
             return View();
         }
 
+        // Création d'une location
         // POST: Leasing/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "LeasingID,ProductID,UserID,Date,Duration,TotalCost,Status,HasComment,Message")] Leasing leasing)
+        public ActionResult Create([Bind(Include = "LeasingID,ProductID,Duration,Message")] Leasing leasing)
         {
             if (ModelState.IsValid)
             {
+                leasing.UserID = int.Parse(this.User.GetCurrentUserId());
+                leasing.TotalCost = leasing.Product.Cost;
+
                 db.Leasings.Add(leasing);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -81,8 +84,6 @@ namespace SitePartage.Controllers
         }
 
         // POST: Leasing/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "LeasingID,ProductID,UserID,Date,Duration,TotalCost,Status,HasComment,Message")] Leasing leasing)

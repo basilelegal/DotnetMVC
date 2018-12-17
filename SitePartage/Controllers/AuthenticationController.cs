@@ -53,6 +53,7 @@ namespace SitePartage.Controllers
             // Rediriger vers l'URL d'origine
             if (Url.IsLocalUrl(ViewBag.ReturnUrl))
             {
+                // TODO vérifier qu'on redirige corrrectement
                 //return Redirect(ViewBag.ReturnUrl);
             }
 

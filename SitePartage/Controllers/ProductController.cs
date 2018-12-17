@@ -36,6 +36,7 @@ namespace SitePartage.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.ProductID = product.ProductID;
             return View(product);
         }
 

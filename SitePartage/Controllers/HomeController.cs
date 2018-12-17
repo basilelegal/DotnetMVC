@@ -13,11 +13,19 @@ namespace SitePartage.Controllers
     {
         private SitePartageEntities db = new SitePartageEntities();
 
-        public ActionResult Index()
+        // Home page
+        public ActionResult Index(string searchString, string categoryID)
         {
             User currentUser = this.User.GetCurrentUser();
 
-            ViewData["randomProducts"] = db.Products.OrderBy(r => Guid.NewGuid()).Take(3).ToList();
+            ViewData["randomProducts"] = db
+                .Products
+                .Include(p => p.Category)
+                .Include(p => p.User)
+                .Where(s => s.Status == "online")
+                .Where(c => c.Cost <= currentUser.NbPoint)
+                .OrderBy(r => Guid.NewGuid()).Take(3)
+                .ToList();
 
             // Liste des categories
             var categories = db.Categories;
@@ -29,13 +37,26 @@ namespace SitePartage.Controllers
             Response.Write("NbPoint : " + currentUser.NbPoint);
 
             // Liste des produits en ligne et visibles par le membre
-            ViewData["products"] = db
+            var products = db
                 .Products
                 .Include(p => p.Category)
                 .Include(p => p.User)
                 .Where(s => s.Status == "online")
-                .Where(c => c.Cost <= currentUser.NbPoint)
-                .ToList();
+                .Where(c => c.Cost <= currentUser.NbPoint);
+
+            // Recherche
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                products = products.Where(n => n.Name.Contains(searchString));
+            }
+            
+            if (!String.IsNullOrEmpty(categoryID))
+            {
+                int categoryIDSearch = int.Parse(categoryID);
+                products = products.Where(c => c.CategoryID == categoryIDSearch);
+            }
+
+            ViewData["products"] = products.ToList();
 
             return View();
         }
