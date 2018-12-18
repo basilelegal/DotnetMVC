@@ -107,6 +107,7 @@ namespace SitePartage.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
+            
             return View(user);
         }
 
@@ -143,6 +144,14 @@ namespace SitePartage.Areas.Admin.Controllers
                 db.Dispose();
             }
             base.Dispose(disposing);
+        }
+
+        // Vérifie l'unicité de l'email 
+        public JsonResult EmailExists(string email)
+        {
+            //User user = db.Users.SingleOrDefault(e => e.Email == email);
+
+            return Json(true);
         }
     }
 }

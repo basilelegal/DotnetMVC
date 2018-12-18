@@ -54,12 +54,7 @@ namespace SitePartage.Areas.Admin.Controllers
         {
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name");
             ViewBag.UserID = new SelectList(db.Users, "UserID", "LastName");
-
-            //ViewBag.Status = new SelectList(Product.statusLst);
-
-
             ViewBag.Status = new SelectList(Product.statusLst, "Value", "Text");
-
             ViewBag.Type = new SelectList(Product.typeLst);
 
             return View();
