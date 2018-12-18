@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using SitePartage.Models;
+using SitePartage.Helpers;
 
 namespace SitePartage.Controllers
 {
@@ -35,7 +36,9 @@ namespace SitePartage.Controllers
             return View(user);
         }
 
+        // Création compte
         // GET: User/Create
+        [AllowAnonymous]
         public ActionResult Create()
         {
             ViewBag.Civility = new SelectList(SitePartage.Models.User.civilityLst);
@@ -43,9 +46,8 @@ namespace SitePartage.Controllers
             return View();
         }
 
+        // Création compte
         // POST: User/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,Address,PostalCode,City")] User user)
@@ -60,61 +62,95 @@ namespace SitePartage.Controllers
             return View(user);
         }
 
-        // GET: User/Edit/5
-        public ActionResult Edit(int? id)
+        // Mes informations
+        // GET: User/Edit
+        public ActionResult Edit()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
+            User user = db.Users.Find(this.User.GetCurrentUserId());
             if (user == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.nbPoint = user.NbPoint;
+
             return View(user);
         }
 
-        // POST: User/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        // Mes informations
+        // POST: User/Edit
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,NbPoint,Address,PostalCode,City,Role")] User user)
+        public ActionResult Edit([Bind(Include = "LastName,FirstName,Civility,NickName,Email,Password,Address,PostalCode,City,Role")] User user)
         {
+            user.UserID = this.User.GetCurrentUserId();
+
             if (ModelState.IsValid)
             {
                 db.Entry(user).State = EntityState.Modified;
+                db.Entry(user).Property(x => x.IsValid).IsModified = false;
+                db.Entry(user).Property(x => x.NbPoint).IsModified = false;
+                db.Entry(user).Property(x => x.Role).IsModified = false;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Edit", "User", new { update = 1 });
             }
+
             return View(user);
         }
 
-        // GET: User/Delete/5
-        public ActionResult Delete(int? id)
+        // Mes annonces
+        // GET: User/Products
+        public ActionResult Products()
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            User user = db.Users.Find(id);
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            return View(user);
+            User currentUser = this.User.GetCurrentUser();
+
+            var products = db
+                .Products
+                .Include(p => p.Category)
+                .Include(p => p.User)
+                .Where(p => p.UserID == currentUser.UserID);
+
+            //ViewData["products"] = products.ToList();
+
+            return View(products.ToList());
         }
 
-        // POST: User/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(int id)
+        // Mes locations
+        // GET: User/Products
+        public ActionResult Leasings()
         {
-            User user = db.Users.Find(id);
-            db.Users.Remove(user);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            User currentUser = this.User.GetCurrentUser();
+            
+            var leasings = db
+                .Leasings
+                .Include(l => l.Product)
+                .Include(l => l.User)
+                .Where(l => l.UserID == currentUser.UserID);
+
+            //ViewData["leasings"] = leasings.ToList();
+
+            return View(leasings.ToList());
+        }
+
+        // Offres reçues
+        // GET: User/Products
+        public ActionResult Offers()
+        {
+            User currentUser = this.User.GetCurrentUser();
+
+            var leasings = db
+                .Leasings
+                .Include(l => l.Product)
+                .Include(l => l.User)
+                .Join(
+                    db.Products.Where(x => x.UserID == currentUser.UserID),
+                    l => l.ProductID,
+                    p => p.ProductID,
+                    (l, p) => l
+                 );
+
+            //ViewData["leasings"] = leasings.ToList();
+
+            return View(leasings.ToList());
         }
 
         protected override void Dispose(bool disposing)
@@ -126,10 +162,19 @@ namespace SitePartage.Controllers
             base.Dispose(disposing);
         }
 
-        // Vérifie l'unicité de l'email 
+        // Vérifie l'unicité de l'email lors de la création ou de la modif
+        [AllowAnonymous]
         public JsonResult EmailExists(string email)
         {
-            User user = db.Users.SingleOrDefault(e => e.Email == email);
+            User user;
+            if (Request.IsAuthenticated)
+            {
+                int userId = this.User.GetCurrentUserId();
+                user = db.Users.SingleOrDefault(e => e.Email == email && e.UserID != userId);
+            } else
+            {
+                user = db.Users.SingleOrDefault(e => e.Email == email);
+            }
 
             return Json(user == null);
         }

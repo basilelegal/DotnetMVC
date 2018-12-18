@@ -18,7 +18,7 @@ namespace SitePartage.Controllers
         {
             if (Request.IsAuthenticated)
             {
-                return Redirect("/");
+                return RedirectToAction("Index", "Home");
             }
             return View();
         }
@@ -58,7 +58,7 @@ namespace SitePartage.Controllers
             }
 
             // Par défaut, rediriger vers la page d'accueil
-            return RedirectToAction("Index", "Home", new { idUser = currentUser.UserID.ToString() } );
+            return RedirectToAction("Index", "Home");
         }
 
         // Validation des identifiant et mot de passe de l'utilisateur

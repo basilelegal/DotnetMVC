@@ -40,6 +40,7 @@ namespace SitePartage.Controllers
             return View(product);
         }
 
+        // Publier une annonce
         // GET: Product/Create
         public ActionResult Create()
         {
@@ -50,19 +51,18 @@ namespace SitePartage.Controllers
             return View();
         }
 
+        // Publier une annonce
         // POST: Product/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductID,CategoryID,Name,Description,Cost,Picture,Type,Weight,Status")] Product product)
         {
             if (ModelState.IsValid)
             {
-                product.UserID = int.Parse(this.User.GetCurrentUserId());
+                product.UserID = this.User.GetCurrentUserId();
                 db.Products.Add(product);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Products", "User", new { create = 1 });
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", product.CategoryID);

@@ -53,12 +53,13 @@ namespace SitePartage.Controllers
         {
             if (ModelState.IsValid)
             {
-                leasing.UserID = int.Parse(this.User.GetCurrentUserId());
-                leasing.TotalCost = leasing.Product.Cost;
+                leasing.UserID = this.User.GetCurrentUserId();
+                Product prod = db.Products.Find(leasing.ProductID);
+                leasing.TotalCost = prod.Cost;
 
                 db.Leasings.Add(leasing);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Leasings", "User", new { create = 1 });
             }
 
             ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name", leasing.ProductID);

@@ -598,6 +598,10 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\Edit.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
+    <Content Include="Views\User\Products.cshtml" />
+    <Content Include="Views\User\Leasings.cshtml" />
+    <Content Include="Views\User\Offers.cshtml" />
+    <Content Include="Views\User\Account.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

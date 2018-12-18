@@ -34,8 +34,6 @@ namespace SitePartage.Controllers
             ViewData["categorySize"] = (int?) Math.Round(categorySplit);
             ViewData["categories"] = db.Categories.ToList();
 
-            Response.Write("NbPoint : " + currentUser.NbPoint);
-
             // Liste des produits en ligne et visibles par le membre
             var products = db
                 .Products
@@ -61,6 +59,7 @@ namespace SitePartage.Controllers
             return View();
         }
 
+        //TODO
         public ActionResult About()
         {
             ViewBag.Message = "Your application description page.";
@@ -68,6 +67,7 @@ namespace SitePartage.Controllers
             return View();
         }
 
+        //TODO
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";

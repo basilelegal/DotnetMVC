@@ -9,18 +9,18 @@ namespace SitePartage.Helpers
         private static SitePartageEntities db = new SitePartageEntities();
 
         // Retourne l'identifiant de utilisateur connecté
-        public static string GetCurrentUserId(this IPrincipal principal)
+        public static int GetCurrentUserId(this IPrincipal principal)
         {
             var claimsIdentity = (ClaimsIdentity)principal.Identity;
-            var claim = claimsIdentity.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier);
-            return claim.Value;
+            var claim = claimsIdentity.FindFirst(ClaimTypes.NameIdentifier);
+            return int.Parse(claim.Value);
         }
 
         // Retourne l'utilisateur connecté
         public static User GetCurrentUser(this IPrincipal principal)
         {
-            string userId = GetCurrentUserId(principal);
-            User currentUser = db.Users.Find(int.Parse(userId));
+            int userId = GetCurrentUserId(principal);
+            User currentUser = db.Users.Find(userId);
 
             return currentUser;
         }
