@@ -56,6 +56,12 @@ namespace SitePartage.Controllers
 
             ViewData["products"] = products.ToList();
 
+            // Alerte
+            if (Request.QueryString["update"] == "1")
+            {
+                ViewData["alert"] = "Vos modifications ont bien été enregistrées.";
+            }
+
             return View();
         }
 

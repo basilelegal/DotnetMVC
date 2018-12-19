@@ -12,7 +12,7 @@
 <div class="total-ads main-grid-border">
 
     <div class="w3-categories">
-        <h3>Categories</h3>
+        <h3>Catégories</h3>
         <div class="container">
 
             @foreach (var category in categories)
@@ -40,7 +40,7 @@
                     <h3 class="agileits-sear-head">Filtrer par mots clés</h3>
                     @using (Html.BeginForm("Index", "Home", FormMethod.Get))
                     {
-                        @Html.TextBox("SearchString", "", new { @placeholder = "mot clés...", @required = "required" }) <br />
+                        @Html.TextBox("SearchString", "", new { @placeholder = "tondeuse, marteau...", @required = "required" }) <br />
                         <br /><input type="submit" value=" " />
                     }
                 </div>
@@ -96,7 +96,7 @@
                                                             <p class="catpath">@product.Category.Name</p>
                                                         </section>
                                                         <section class="list-right">
-                                                            <span class="date">TODO AJOUTER UNE DATE</span>
+                                                            <span class="date">TODO ajouter qqch</span>
                                                         </section>
                                                         <div class="clearfix"></div>
                                                     </li>

@@ -59,7 +59,7 @@ namespace SitePartage.Controllers
 
                 db.Leasings.Add(leasing);
                 db.SaveChanges();
-                return RedirectToAction("Leasings", "User", new { create = 1 });
+                return RedirectToAction("Account", "User", new { leasing = 1 });
             }
 
             ViewBag.ProductID = new SelectList(db.Products, "ProductID", "Name", leasing.ProductID);

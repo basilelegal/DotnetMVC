@@ -49,6 +49,7 @@ namespace SitePartage.Controllers
         // Création compte
         // POST: User/Create
         [HttpPost]
+        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,Address,PostalCode,City")] User user)
         {
@@ -72,27 +73,6 @@ namespace SitePartage.Controllers
                 return HttpNotFound();
             }
             ViewBag.nbPoint = user.NbPoint;
-
-            return View(user);
-        }
-
-        // Mes informations
-        // POST: User/Edit
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "LastName,FirstName,Civility,NickName,Email,Password,Address,PostalCode,City,Role")] User user)
-        {
-            user.UserID = this.User.GetCurrentUserId();
-
-            if (ModelState.IsValid)
-            {
-                db.Entry(user).State = EntityState.Modified;
-                db.Entry(user).Property(x => x.IsValid).IsModified = false;
-                db.Entry(user).Property(x => x.NbPoint).IsModified = false;
-                db.Entry(user).Property(x => x.Role).IsModified = false;
-                db.SaveChanges();
-                return RedirectToAction("Edit", "User", new { update = 1 });
-            }
 
             return View(user);
         }
@@ -151,6 +131,87 @@ namespace SitePartage.Controllers
             //ViewData["leasings"] = leasings.ToList();
 
             return View(leasings.ToList());
+        }
+
+        // Mon compte
+        // GET: User/Account
+        public ActionResult Account()
+        {
+            // Mes informations
+            int userId = this.User.GetCurrentUserId();
+            User currentUser = db.Users.Find(userId);
+
+            if (currentUser == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.nbPoint = currentUser.NbPoint;
+
+            // Mes annonces
+            var products = db
+                .Products
+                .Include(p => p.Category)
+                .Include(p => p.User)
+                .Where(p => p.UserID == currentUser.UserID);
+
+            ViewData["products"] = products.ToList();
+
+            // Mes locations
+            var leasings = db
+                .Leasings
+                .Include(l => l.Product)
+                .Include(l => l.User)
+                .Where(l => l.UserID == currentUser.UserID);
+
+            ViewData["leasings"] = leasings.ToList();
+
+            // Offres reçues
+            var offers = db
+                .Leasings
+                .Include(l => l.Product)
+                .Include(l => l.User)
+                .Join(
+                    db.Products.Where(x => x.UserID == currentUser.UserID),
+                    l => l.ProductID,
+                    p => p.ProductID,
+                    (l, p) => l
+                );
+
+            ViewData["offers"] = leasings.ToList();
+
+            // Alerte
+            if (Request.QueryString["update"] == "1")
+            {
+                ViewData["alert"] = "Vos modifications ont bien été enregistrées.";
+            }
+            else if (Request.QueryString["leasing"] == "1")
+            {
+                ViewData["alert"] = "Votre demande de location a bien été enregistrée.";
+            }
+
+            return View(currentUser);
+        }
+
+        // Mes informations
+        // POST: User/Account
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Account([Bind(Include = "LastName,FirstName,Civility,NickName,Email,Password,Address,PostalCode,City,Role")] User user)
+        {
+            user.UserID = this.User.GetCurrentUserId();
+
+            if (ModelState.IsValid)
+            {
+                db.Entry(user).State = EntityState.Modified;
+                db.Entry(user).Property(x => x.IsValid).IsModified = false;
+                db.Entry(user).Property(x => x.NbPoint).IsModified = false;
+                db.Entry(user).Property(x => x.Role).IsModified = false;
+                int nb = db.SaveChanges();
+
+                return RedirectToAction("Account", "User", new { update = 1 });
+            }
+
+            return View(user);
         }
 
         protected override void Dispose(bool disposing)

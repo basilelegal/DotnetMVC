@@ -35,7 +35,8 @@ namespace SitePartage
                         "~/Content/custom/menu_sideslide.css",
                         "~/Content/custom/jquery.uls.css",
                         "~/Content/custom/jquery.uls.grid.css",
-                        "~/Content/custom/jquery.uls.lcd.css"
+                        "~/Content/custom/jquery.uls.lcd.css",
+                        "~/Content/custom/easy-responsive-tabs.css"
                         ));
 
             bundles.Add(new ScriptBundle("~/bundles/custom_js").Include(
@@ -54,7 +55,8 @@ namespace SitePartage
                         "~/Scripts/custom/main.js",
                         "~/Scripts/custom/move-top.js",
                         "~/Scripts/custom/easing.js",
-                        "~/Scripts/custom/jquery-ui.js"));
+                        "~/Scripts/custom/jquery-ui.js",
+                        "~/Scripts/custom/easyResponsiveTabs.js"));
         }
     }
 }

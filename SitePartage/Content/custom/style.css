@@ -4191,6 +4191,34 @@ ul.privacy-start {
     -ms-transition: 0.5s all;
 	float: left;
 }
+.post-ad-form input[type="password"] {
+    padding: 10px 10px 10px 10px;
+    width: 70%;
+    margin-bottom: 25px;
+    border: 1px solid #ff4c4c;
+    outline: none;
+    color: #555;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    float: left;
+}
+.post-ad-form input[type="number"] {
+    padding: 10px 10px 10px 10px;
+    width: 70%;
+    margin-bottom: 25px;
+    border: 1px solid #ff4c4c;
+    outline: none;
+    color: #555;
+    transition: 0.5s all;
+    -webkit-transition: 0.5s all;
+    -moz-transition: 0.5s all;
+    -o-transition: 0.5s all;
+    -ms-transition: 0.5s all;
+    float: left;
+}
 .post-ad-form textarea {
     height: 180px;
     outline: none;
@@ -4202,14 +4230,14 @@ ul.privacy-start {
     outline: none;
     color: #555;
 }
-.post-ad-form input[type="text"]:hover,.post-ad-form textarea:hover {
-    border: 1px solid #0099e5;
-    transition:0.5s all;
-	-webkit-transition:0.5s all;
-	-moz-transition:0.5s all;
-	-o-transition:0.5s all;
-	-ms-transition:0.5s all;
-}
+    .post-ad-form input[type="text"]:hover, .post-ad-form input[type="password"]:hover, .post-ad-form input[type="number"]:hover, .post-ad-form textarea:hover {
+        border: 1px solid #0099e5;
+        transition: 0.5s all;
+        -webkit-transition: 0.5s all;
+        -moz-transition: 0.5s all;
+        -o-transition: 0.5s all;
+        -ms-transition: 0.5s all;
+    }
 .post-ad-form form select {
     border: 1px solid #ff4c4c;
     background-color: #fff;

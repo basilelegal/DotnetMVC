@@ -20,6 +20,13 @@ namespace SitePartage.Controllers
             {
                 return RedirectToAction("Index", "Home");
             }
+
+            // Alerte
+            if (Request.QueryString["register"] == "1")
+            {
+                ViewData["alert"] = "Votre inscription a bien été enregistrée. Vous pourrez vous connecter après validation d'un administrateur.";
+            }
+
             return View();
         }
 
