@@ -63,76 +63,6 @@ namespace SitePartage.Controllers
             return View(user);
         }
 
-        // Mes informations
-        // GET: User/Edit
-        public ActionResult Edit()
-        {
-            User user = db.Users.Find(this.User.GetCurrentUserId());
-            if (user == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.nbPoint = user.NbPoint;
-
-            return View(user);
-        }
-
-        // Mes annonces
-        // GET: User/Products
-        public ActionResult Products()
-        {
-            User currentUser = this.User.GetCurrentUser();
-
-            var products = db
-                .Products
-                .Include(p => p.Category)
-                .Include(p => p.User)
-                .Where(p => p.UserID == currentUser.UserID);
-
-            //ViewData["products"] = products.ToList();
-
-            return View(products.ToList());
-        }
-
-        // Mes locations
-        // GET: User/Products
-        public ActionResult Leasings()
-        {
-            User currentUser = this.User.GetCurrentUser();
-            
-            var leasings = db
-                .Leasings
-                .Include(l => l.Product)
-                .Include(l => l.User)
-                .Where(l => l.UserID == currentUser.UserID);
-
-            //ViewData["leasings"] = leasings.ToList();
-
-            return View(leasings.ToList());
-        }
-
-        // Offres reçues
-        // GET: User/Products
-        public ActionResult Offers()
-        {
-            User currentUser = this.User.GetCurrentUser();
-
-            var leasings = db
-                .Leasings
-                .Include(l => l.Product)
-                .Include(l => l.User)
-                .Join(
-                    db.Products.Where(x => x.UserID == currentUser.UserID),
-                    l => l.ProductID,
-                    p => p.ProductID,
-                    (l, p) => l
-                 );
-
-            //ViewData["leasings"] = leasings.ToList();
-
-            return View(leasings.ToList());
-        }
-
         // Mon compte
         // GET: User/Account
         public ActionResult Account()
@@ -169,7 +99,7 @@ namespace SitePartage.Controllers
             var offers = db
                 .Leasings
                 .Include(l => l.Product)
-                .Include(l => l.User)
+                .Include(u => u.User)
                 .Join(
                     db.Products.Where(x => x.UserID == currentUser.UserID),
                     l => l.ProductID,
@@ -177,7 +107,9 @@ namespace SitePartage.Controllers
                     (l, p) => l
                 );
 
-            ViewData["offers"] = leasings.ToList();
+            ViewData["offers"] = offers.ToList();
+
+            var offersList = offers.ToList();
 
             // Alerte
             if (Request.QueryString["update"] == "1")
@@ -187,6 +119,10 @@ namespace SitePartage.Controllers
             else if (Request.QueryString["leasing"] == "1")
             {
                 ViewData["alert"] = "Votre demande de location a bien été enregistrée.";
+            }
+            else if (Request.QueryString["accept"] == "1")
+            {
+                ViewData["alert"] = "La location a bien été enregistrée.";
             }
 
             return View(currentUser);
@@ -223,7 +159,7 @@ namespace SitePartage.Controllers
             base.Dispose(disposing);
         }
 
-        // Vérifie l'unicité de l'email lors de la création ou de la modif
+        // Vérifie l'unicité de l'email lors de la création ou de la modification
         [AllowAnonymous]
         public JsonResult EmailExists(string email)
         {

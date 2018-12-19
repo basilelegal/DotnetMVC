@@ -19,6 +19,7 @@ namespace SitePartage.Models
         public static List<SelectListItem> statusLst = new List<SelectListItem>
         {
             new SelectListItem { Text = "A valider", Value = "to_validate" },
+            new SelectListItem { Text = "Refusée", Value = "refused" },
             new SelectListItem { Text = "En cours", Value = "in_progress" },
             new SelectListItem { Text = "Terminée", Value = "completed" }
         };

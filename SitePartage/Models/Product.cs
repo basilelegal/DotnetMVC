@@ -18,14 +18,11 @@ namespace SitePartage.Models
     {
         public static List<string> typeLst = new List<string>() { "matériel", "service" };
 
-        public IEnumerable<SelectListItem> statusListItem { get; set; }
-
-        public static SelectList StatusOptions { get; internal set; }
-
         public static List<SelectListItem> statusLst = new List<SelectListItem>
         {
             new SelectListItem { Text = "Brouillon", Value = "draft" },
             new SelectListItem { Text = "A valider", Value = "to_validate" },
+            new SelectListItem { Text = "En location", Value = "leasing" },
             new SelectListItem { Text = "En ligne", Value = "online" },
         };
 

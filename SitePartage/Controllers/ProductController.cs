@@ -62,7 +62,7 @@ namespace SitePartage.Controllers
                 product.UserID = this.User.GetCurrentUserId();
                 db.Products.Add(product);
                 db.SaveChanges();
-                return RedirectToAction("Products", "User", new { create = 1 });
+                return RedirectToAction("Account", "User", new { create = 1 });
             }
 
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", product.CategoryID);
@@ -70,38 +70,51 @@ namespace SitePartage.Controllers
             return View(product);
         }
 
+        // Modifier une annonce
         // GET: Product/Edit/5
         public ActionResult Edit(int? id)
         {
+            int UserID = this.User.GetCurrentUserId();
+
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            // On controle que le produit appartient à l'utilisateur connecté
             Product product = db.Products.Find(id);
-            if (product == null)
+            if (product == null || product.UserID != UserID)
             {
                 return HttpNotFound();
             }
+
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", product.CategoryID);
             ViewBag.UserID = new SelectList(db.Users, "UserID", "LastName", product.UserID);
+            ViewBag.Type = new SelectList(Product.typeLst);
+
             return View(product);
         }
 
+        // Modifier une annonce
         // POST: Product/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ProductID,CategoryID,UserID,Name,Description,Cost,Picture,Type,Weight,Status")] Product product)
+        public ActionResult Edit([Bind(Include = "ProductID,CategoryID,Name,Description,Cost,Picture,Type,Weight")] Product product)
         {
+            int UserID = this.User.GetCurrentUserId();
+
             if (ModelState.IsValid)
             {
                 db.Entry(product).State = EntityState.Modified;
+                db.Entry(product).Property(x => x.UserID).IsModified = false;
+                db.Entry(product).Property(x => x.Status).IsModified = false;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Account", "User", new { update = 1 });
             }
             ViewBag.CategoryID = new SelectList(db.Categories, "CategoryID", "Name", product.CategoryID);
             ViewBag.UserID = new SelectList(db.Users, "UserID", "LastName", product.UserID);
+
             return View(product);
         }
 

@@ -1,7 +1,7 @@
 ﻿@model SitePartage.Models.Product
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Annonce";
 }
 
 <div class="single-page main-grid-border ">
@@ -44,12 +44,27 @@
                     </div>
                 </div>
                 <div class="interested text-center">
-                    <h4>
-                        Intéressé par cette annonce ?
-                        <br /><br />
-                        <button class="btn-lg" data-toggle="modal" data-target="#myModal2">Contacter le loueur !</button>
-                    </h4>
-                </div>
+                    @if (Model.Status == "leasing")
+                    {
+                        <h4>
+                            Produit en cours de location...
+                        </h4>
+                    }
+                    else if (Model.Status == "online")
+                    {
+                        <h4>
+                            Intéressé par cette annonce ?
+                            <br /><br />
+                            <button class="btn-lg" data-toggle="modal" data-target="#myModal2">Contacter le loueur !</button>
+                        </h4>
+                    }
+                    else
+                    {
+                        <h4>
+                            Produit indisponible
+                        </h4>
+                    }
+                    </div>
                 <div class="agileinfo_signin" style="box-shadow: 0px 0px 0px">
                     <div class="modal fade" id="myModal2" role="dialog">
                         <div class="modal-dialog">
@@ -81,10 +96,3 @@
         </div>
     </div>
 </div>
-
-
-<div>
-</div>
-<p>
-    @Html.ActionLink("Retour", "Index", "Home")
-</p>

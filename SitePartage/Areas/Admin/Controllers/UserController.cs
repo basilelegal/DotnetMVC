@@ -23,6 +23,7 @@ namespace SitePartage.Areas.Admin.Controllers
             var users = from u in db.Users
                         select u;
 
+            // Recherche
             if (!String.IsNullOrEmpty(searchString))
             {
                 users = users.Where(l => l.LastName.Contains(searchString) || l.FirstName.Contains(searchString));
@@ -63,8 +64,6 @@ namespace SitePartage.Areas.Admin.Controllers
         }
 
         // POST: Admin/User/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,NbPoint,Address,PostalCode,City,Role,IsValid")] User user)
@@ -91,12 +90,14 @@ namespace SitePartage.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
+
+            List<string> roleLst = new List<string>() { "Membre", "Admin" };
+            ViewBag.Role = new SelectList(roleLst);
+
             return View(user);
         }
 
         // POST: Admin/User/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "UserID,LastName,FirstName,Civility,NickName,Email,Password,NbPoint,Address,PostalCode,City,Role,IsValid")] User user)

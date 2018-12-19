@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<SitePartage.Models.Category>
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Listes des catégories";
 }
 
-<h2>Index</h2>
+<h2>Listes des catégories</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Créer une catégorie", "Create")
 </p>
 <table class="table">
     <tr>
@@ -29,9 +29,8 @@
             @Html.DisplayFor(modelItem => item.Picture)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.CategoryID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.CategoryID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.CategoryID })
+            @Html.ActionLink("Modifier", "Edit", new { id=item.CategoryID }) |
+            @Html.ActionLink("Supprimer", "Delete", new { id=item.CategoryID })
         </td>
     </tr>
 }

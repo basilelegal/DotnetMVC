@@ -1,38 +1,35 @@
 ﻿@model IEnumerable<SitePartage.Models.Product>
 
-@{
-    ViewBag.Title = "Liste des produits";
+@if (Request.Params["Status"] == "to_validate")
+{
+    ViewBag.Title = "Propositions de produits";
+    <h2>Propositions de produits</h2>
 }
-
-<h2>Liste des produits</h2>
-
+else
+{
+    ViewBag.Title = "Liste des produits";
+    <h2>Liste des produits</h2>
+}
+    <br />
 <p>
-    @Html.ActionLink("Create New", "Create")
-
     @using (Html.BeginForm("Index", "Product", FormMethod.Get))
     {
     <p>
-        Nom : @Html.TextBox("SearchString") <br />
+        Nom : @Html.TextBox("SearchString") <br /><br />
 
-        Etat : @Html.DropDownList("Status", "Tous") <br />
+        Etat : @Html.DropDownList("Status", "Tous") <br /><br />
 
         <input type="submit" value="Filter" />
     </p>
-    }
-</p>
+}
+    </p>
     <table class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Name)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Picture)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Type)
@@ -59,13 +56,7 @@
                     @Html.DisplayFor(modelItem => item.Name)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
                     @Html.DisplayFor(modelItem => item.Cost)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Picture)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Type)
@@ -83,9 +74,16 @@
                     @Html.DisplayFor(modelItem => item.User.LastName)
                 </td>
                 <td>
-                    @Html.ActionLink("Modifier", "Edit", new { id = item.ProductID }) |
-                    @Html.ActionLink("Détails", "Details", new { id = item.ProductID }) |
-                    @Html.ActionLink("Supprimer", "Delete", new { id = item.ProductID })
+                    @if (Request.Params["Status"] == "to_validate")
+                    {
+                        @Html.ActionLink("Valider / Refuser", "Edit", new { id = item.ProductID })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Modifier", "Edit", new { id = item.ProductID })
+                    }
+
+                    @Html.ActionLink("Détails", "Details", new { id = item.ProductID })
                 </td>
             </tr>
         }

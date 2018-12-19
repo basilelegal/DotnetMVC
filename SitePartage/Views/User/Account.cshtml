@@ -18,7 +18,7 @@
                         <li>Mes informations</li>
                         <li>Mes annonces</li>
                         <li>Offres reçues</li>
-                        <li>Mes demandes</li>
+                        <li>Mes locations</li>
                     </ul>
                 </div>
                 <div class="resp-tabs-container hor_1">
@@ -123,11 +123,39 @@
                                 <div class="category-info" style="width: 70%">
                                     <h4>@offer.Product.Name</h4>
                                     <br />
-                                    Message : <span>@offer.Message</span>
-                                    TODO :
-                                    <button class="btn btn-success">Accepter</button> &nbsp; &nbsp;<button class="btn btn-danger">Refuser</button>
-                                    <span class="badge badge-success" style="width: 30%"><span style="color: white">Acceptée</span></span>
-                                    <span class="badge badge-danger" style="width: 30%"><span style="color: white">Refusée</span></span>
+                                    Message de @offer.User.FirstName @offer.User.LastName : <i><span>@offer.Message</span></i>
+
+                                    @if (offer.Status == "to_validate")
+                                    {
+                                       <div style="display:inline;width: 20%;float: left;">
+                                        @using(Html.BeginForm("Accept", "Leasing"))
+                                        {
+                                            @Html.AntiForgeryToken()
+                                            @Html.Hidden("LeasingID", @offer.LeasingID)
+                                            <input class="btn btn-success" type="submit" value="Accepter">
+                                        }
+                                       </div>
+                                       <div style="display:inline;float: left;">
+                                       @using(Html.BeginForm("Refuse", "Leasing"))
+                                           {
+                                           @Html.AntiForgeryToken()
+                                           @Html.Hidden("LeasingID", @offer.LeasingID)
+                                           <input class="btn btn-danger" type="submit" value="Refuser">
+                                           }
+                                       </div>
+                                    }
+                                    else if (offer.Status == "in_progress")
+                                    {
+                                        <span class="badge badge-success" style="width: 30%"><span style="color: white">Acceptée</span></span>
+                                    }
+                                    else if (offer.Status == "refused")
+                                    {
+                                        <span class="badge badge-danger" style="width: 30%"><span style="color: white">Refusée</span></span>
+                                    }
+                                    else if (offer.Status == "completed")
+                                    {
+                                        <span class="badge badge-secondary" style="width: 30%"><span style="color: white">Terminée</span></span>
+                                    }
                                 </div>
                                 <div class="clearfix"></div>
                             </div>
@@ -137,43 +165,40 @@
                     <div>
                         <div class="category">
                             <span class="active total" style="display:block;">
-                                <strong>Mes demandes</strong>
+                                <strong>Mes locations</strong>
                             </span>
-                            <div class="category-img">
-                                <img src="https://fakeimg.pl/300/" title="image" alt="" />
-                            </div>
-                            <div class="category-info" style="width: 70%">
-                                <h4>Titre de l'annonce n°2</h4>
-                                <br />
-                                Votre message: <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ornare mauris nec metus dignissim interdum. Mauris vel facilisis nullam. </span>
-                                <span class="badge badge-secondary" style="width: 30%"><span style="color: white">En attente</span></span>
-                            </div>
-                            <div class="clearfix"></div>
                         </div>
-                        <div class="category">
-                            <div class="category-img">
-                                <img src="https://fakeimg.pl/300/" title="image" alt="" />
+                        @foreach (var leasing in Leasings)
+                        {
+                            <div class="category">
+                                <div class="category-img">
+                                    <img src="@leasing.Product.Picture" title="@leasing.Product.Name" alt="@leasing.Product.Name" />
+                                </div>
+                                <div class="category-info" style="width: 70%">
+                                    <h4>@leasing.Product.Name</h4>
+                                    <br />
+                                    Mon message : <i><span>@leasing.Message</span></i>
+
+                                    @if (leasing.Status == "to_validate")
+                                    {
+                                        <span class="badge badge-secondary" style="width: 30%"><span style="color: white">En attente</span></span>
+                                    }
+                                    else if (leasing.Status == "in_progress")
+                                    {
+                                        <span class="badge badge-success" style="width: 30%"><span style="color: white">Acceptée</span></span>
+                                    }
+                                    else if (leasing.Status == "refused")
+                                    {
+                                        <span class="badge badge-danger" style="width: 30%"><span style="color: white">Refusée</span></span>
+                                    }
+                                    else if (leasing.Status == "completed")
+                                    {
+                                        <span class="badge badge-secondary" style="width: 30%"><span style="color: white">Terminée</span></span>
+                                    }
+                                </div>
+                                <div class="clearfix"></div>
                             </div>
-                            <div class="category-info" style="width: 70%">
-                                <h4>Titre de l'annonce n°3</h4>
-                                <br />
-                                Message: <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ornare mauris nec metus dignissim interdum. Mauris vel facilisis nullam. </span>
-                                <span class="badge badge-success" style="width: 30%"><span style="color: white">Acceptée</span></span>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="category">
-                            <div class="category-img">
-                                <img src="https://fakeimg.pl/300/" title="image" alt="" />
-                            </div>
-                            <div class="category-info" style="width: 70%">
-                                <h4>Titre de l'annonce n°4</h4>
-                                <br />
-                                Message: <span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ornare mauris nec metus dignissim interdum. Mauris vel facilisis nullam. </span>
-                                <span class="badge badge-danger" style="width: 30%"><span style="color: white">Refusée</span></span>
-                            </div>
-                            <div class="clearfix"></div>
-                        </div>
+                        }
                     </div>
                     <div class="clearfix"></div>
                 </div>

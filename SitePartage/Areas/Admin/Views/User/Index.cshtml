@@ -10,16 +10,14 @@ else
     ViewBag.Title = "Liste des membres";
     <h2>Liste des membres</h2>
 }
-
+    <br />
 <p>
-    @Html.ActionLink("Create New", "Create")
-
     @using (Html.BeginForm("Index", "User", FormMethod.Get))
     {
     <p>
-        Nom : @Html.TextBox("SearchString") <br />
+        Nom : @Html.TextBox("SearchString") <br /><br />
 
-        Validé : @Html.DropDownList("IsValid", "Tous") <br />
+        Validé : @Html.DropDownList("IsValid", "Tous") <br /><br />
 
         <input type="submit" value="Filter" />
     </p>
@@ -96,12 +94,12 @@ else
                 <td>
                     @if (Request.Params["isValid"] == "Non")
                     {
-                        @Html.ActionLink("Refuser", "Delete", new { id = item.UserID })
-                        @Html.ActionLink("Valider", "Edit", new { id = item.UserID })
+                        @Html.ActionLink("Valider ", "Edit", new { id = item.UserID })
+                        @Html.ActionLink("Refuser ", "Delete", new { id = item.UserID })
                     }
                     else
                     {
-                    @Html.ActionLink("Modifier", "Edit", new { id = item.UserID })
+                        @Html.ActionLink("Modifier", "Edit", new { id = item.UserID })
                     }
 
                     @Html.ActionLink("Détails", "Details", new { id = item.UserID })

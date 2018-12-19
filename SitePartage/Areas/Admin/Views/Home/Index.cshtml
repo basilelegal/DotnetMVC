@@ -1,27 +1,13 @@
 ﻿
 @{
-    ViewBag.Title = "Index d'administration";
+    ViewBag.Title = "Backoffice";
 }
-
-<h2>Index d'administratio</h2>
-
+<br />
 <div class="jumbotron">
     <h1>Backoffice</h1>
-    <p class="lead">Troc de matériels & services entre particuliers</p>
+    <p class="lead">PartageCO : Troc de matériels & services entre particuliers</p>
     <a href="@Url.Action("Index", "User", new { IsValid = "Non" })" class="btn btn-primary btn-lg">Demandes d'inscription (@ViewData["nbUserToValidate"])</a>
     <a href="@Url.Action("Index", "Product", new { Status = "to_validate" })" class="btn btn-primary btn-lg">Propositions de produits (@ViewData["nbProductToValidate"])</a>
 </div>
 
-<div class="row">
-    <div class="col-md-4">
-        <h2>Get more libraries</h2>
-        <p>NuGet is a free Visual Studio extension that makes it easy to add, remove, and update libraries and tools in Visual Studio projects.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
-    </div>
-    <div class="col-md-4">
-        <h2>Web Hosting</h2>
-        <p>You can easily find a web hosting company that offers the right mix of features and price for your applications.</p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301867">Learn more &raquo;</a></p>
-    </div>
-</div>
 

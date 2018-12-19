@@ -17,10 +17,11 @@ namespace SitePartage.Areas.Admin.Controllers
         //GET: Admin/Product
         public ActionResult Index(string searchString, string status)
         {
-            ViewBag.Status = new SelectList(Product.statusLst);
+            ViewBag.Status = new SelectList(Product.statusLst, "Value", "Text");
 
             var products = db.Products.Include(p => p.Category).Include(p => p.User);
             
+            // Recherche
             if (!String.IsNullOrEmpty(searchString))
             {
                 products = products.Where(n => n.Name.Contains(searchString));
@@ -61,8 +62,6 @@ namespace SitePartage.Areas.Admin.Controllers
         }
 
         // POST: Admin/Product/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ProductID,CategoryID,UserID,Name,Description,Cost,Picture,Type,Weight,Status")] Product product)
@@ -97,15 +96,12 @@ namespace SitePartage.Areas.Admin.Controllers
             ViewBag.UserID = new SelectList(db.Users, "UserID", "LastName", product.UserID);
 
             ViewBag.Status = new SelectList(Product.statusLst, "Value", "Text");
-
             ViewBag.Type = new SelectList(Product.typeLst);
 
             return View(product);
         }
 
         // POST: Admin/Product/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit([Bind(Include = "ProductID,CategoryID,UserID,Name,Description,Cost,Picture,Type,Weight,Status")] Product product)
