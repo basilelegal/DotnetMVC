@@ -100,6 +100,78 @@ namespace SitePartage.Controllers
             return View(leasing);
         }
 
+        // Acceptation de la location
+        // POST: Leasing/Accept/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Accept([Bind(Include = "LeasingID")] Leasing leasing)
+        {
+            Leasing leasingModified = db.Leasings
+                .Include(l => l.Product)
+                .Include(l => l.User)
+                .Where(l => l.LeasingID == leasing.LeasingID)
+                .First();
+
+            // Controle utilisateur connecté
+            int userId = this.User.GetCurrentUserId();
+            if (leasingModified.Product.UserID == userId)
+            {
+                // MAJ de la location
+                leasingModified.Status = "in_progress";
+                db.Entry(leasingModified).State = EntityState.Modified;
+                db.SaveChanges();
+
+                // MAJ du produit
+                Product product = db.Products.Find(leasingModified.ProductID);
+                product.Status = "leasing";
+                db.Entry(product).State = EntityState.Modified;
+                db.SaveChanges();
+
+                // MAJ du nb de points du membre qui fait la location
+                User leasingUser = db.Users.Find(leasingModified.UserID);
+                leasingUser.NbPoint = leasingUser.NbPoint - leasingModified.TotalCost;
+                db.Entry(leasingUser).State = EntityState.Modified;
+                db.SaveChanges();
+
+                // MAJ du nb de points du membre qui passe l'annonce
+                User currentUser = db.Users.Find(userId);
+                currentUser.NbPoint = currentUser.NbPoint + leasingModified.TotalCost;
+                db.Entry(currentUser).State = EntityState.Modified;
+                db.SaveChanges();
+
+                return RedirectToAction("Account", "User", new { accept = 1 } );
+            }
+
+            return RedirectToAction("Account", "User");
+        }
+
+        // Refus de la location
+        // POST: Leasing/Refus/5
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Refuse([Bind(Include = "LeasingID")] Leasing leasing)
+        {
+            Leasing leasingModified = db.Leasings
+                .Include(l => l.Product)
+                .Include(l => l.User)
+                .Where(l => l.LeasingID == leasing.LeasingID)
+                .First();
+
+            // Controle utilisateur connecté
+            int userId = this.User.GetCurrentUserId();
+            if (leasingModified.Product.UserID == userId)
+            {
+                // MAJ de la location
+                leasingModified.Status = "refused";
+                db.Entry(leasingModified).State = EntityState.Modified;
+                db.SaveChanges();
+           
+                return RedirectToAction("Account", "User", new { accept = 1 });
+            }
+
+            return RedirectToAction("Account", "User");
+        }
+
         // GET: Leasing/Delete/5
         public ActionResult Delete(int? id)
         {

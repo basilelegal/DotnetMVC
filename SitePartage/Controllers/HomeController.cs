@@ -17,7 +17,7 @@ namespace SitePartage.Controllers
         public ActionResult Index(string searchString, string categoryID)
         {
             User currentUser = this.User.GetCurrentUser();
-
+            
             ViewData["randomProducts"] = db
                 .Products
                 .Include(p => p.Category)
@@ -26,7 +26,7 @@ namespace SitePartage.Controllers
                 .Where(c => c.Cost <= currentUser.NbPoint)
                 .OrderBy(r => Guid.NewGuid()).Take(3)
                 .ToList();
-
+                
             // Liste des categories
             var categories = db.Categories;
             int categoriesCount = categories.Count();
@@ -61,22 +61,6 @@ namespace SitePartage.Controllers
             {
                 ViewData["alert"] = "Vos modifications ont bien été enregistrées.";
             }
-
-            return View();
-        }
-
-        //TODO
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        //TODO
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
 
             return View();
         }

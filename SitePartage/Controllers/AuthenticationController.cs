@@ -60,7 +60,6 @@ namespace SitePartage.Controllers
             // Rediriger vers l'URL d'origine
             if (Url.IsLocalUrl(ViewBag.ReturnUrl))
             {
-                // TODO vérifier qu'on redirige corrrectement
                 //return Redirect(ViewBag.ReturnUrl);
             }
 
@@ -77,7 +76,6 @@ namespace SitePartage.Controllers
                 return null;
             }
 
-            // TODO chiffrer le Password ?
             if (currentUser.Password != password)
             {
                 return null;
