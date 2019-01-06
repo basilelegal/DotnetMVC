@@ -36,7 +36,17 @@ namespace SitePartage.Controllers
             {
                 return HttpNotFound();
             }
+
+
             ViewBag.ProductID = product.ProductID;
+
+            int UserID = this.User.GetCurrentUserId();
+            ViewBag.isMyProd = false;
+            if (product.UserID == UserID)
+            {
+                ViewBag.isMyProd = true;
+            }
+
             return View(product);
         }
 

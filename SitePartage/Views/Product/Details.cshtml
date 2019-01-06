@@ -50,7 +50,7 @@
                             Produit en cours de location...
                         </h4>
                     }
-                    else if (Model.Status == "online")
+                    else if (Model.Status == "online" && !@ViewBag.isMyProd)
                     {
                         <h4>
                             Intéressé par cette annonce ?

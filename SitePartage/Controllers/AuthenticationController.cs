@@ -60,7 +60,7 @@ namespace SitePartage.Controllers
             // Rediriger vers l'URL d'origine
             if (Url.IsLocalUrl(ViewBag.ReturnUrl))
             {
-                //return Redirect(ViewBag.ReturnUrl);
+                return Redirect(ViewBag.ReturnUrl);
             }
 
             // Par défaut, rediriger vers la page d'accueil

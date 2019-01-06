@@ -124,6 +124,10 @@ namespace SitePartage.Controllers
             {
                 ViewData["alert"] = "La location a bien été enregistrée.";
             }
+            else if (Request.QueryString["create"] == "1")
+            {
+                ViewData["alert"] = "Votre annonce a bien été enregistrée.";
+            }
 
             return View(currentUser);
         }
